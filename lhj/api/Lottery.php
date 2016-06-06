@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('prc');
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -14,7 +14,30 @@ class Lottery
      *单位分数表
      */
     public $scoreTable=array(
-        array(5,2,10,20,10,0,5,2,5,10,10,20,5,5,10,20,10,0,5,5,5,10,50,100)
+        1 => array("u" => 5, "index" => 1),
+        2 => array("u" => 2, "index" => 1),
+        3 => array("u" => 10, "index" => 3),
+        4 => array("u" => 20, "index" => 5),
+        5 => array("u" => 10, "index" => 5),
+        6 => array("u" => 0, "index" => 0),
+        7 => array("u" => 5, "index" => 1),
+        8 => array("u" => 2, "index" => 2),
+        9 => array("u" => 5, "index" => 2),
+        10 => array("u" => 10, "index" => 4),
+        11 => array("u" => 10, "index" => 7),
+        12 => array("u" => 20, "index" => 7),
+        13 => array("u" => 5, "index" => 1),
+        14 => array("u" => 5, "index" => 3),
+        15 => array("u" => 10, "index" => 3),
+        16 => array("u" => 20, "index" => 6),
+        17 => array("u" => 10, "index" => 6),
+        18 => array("u" => 0, "index" => 0),
+        19 => array("u" => 5, "index" => 1),
+        20 => array("u" => 5, "index" => 4),
+        21 => array("u" => 5, "index" => 2),
+        22 => array("u" => 10, "index" => 4),
+        23 => array("u" => 50, "index" => 8),
+        24 => array("u" => 100, "index" => 8)
     );
 
     /**
@@ -100,13 +123,37 @@ class Lottery
 
 //          本次应该扣除的分数;
             $reduceScore = 0;
+            $newArr=array();
             foreach($this->zhu as $k=>$v){
+                $newArr[$k] = $v;
                 $reduceScore+=$v;
             }
-            print_r($this->scoreTable[$weizhi]);
-            print_r($this->zhu[$weizhi]);
-            $score = $this->scoreTable[$weizhi]*$this->zhu[$weizhi];
-
+            $unit = $this->scoreTable[$weizhi]["u"];
+            if($weizhi == 6 || $weizhi == 18){
+                $theScore = 0;  //本次得分;
+            }else{
+                $theScore = $unit * $newArr[$this->scoreTable[$weizhi]["index"]]; //本次得分;
+            }
+            $endScore = $score-$reduceScore+$theScore;  //最后分数;
+            $sql = "UPDATE `lhj_users` SET score = ".$endScore." WHERE id = ".$n['id'];
+            $result = $connect->db->exec($sql);
+            if($result){
+//                $time = date('Y-m-d H:i:s',time());
+                $sql = "INSERT INTO `lhj_log` VALUES (NULL, ".$n['id'].", ".$theScore.", ".$reduceScore.", ".$endScore.", ".time().")";
+                $result = $connect->db->exec($sql);
+                if($result){
+                    $d = array(
+                        "code" => 0,
+                        "data" => array(
+                            "weizhi" => $weizhi,
+                            "defen" => $theScore,
+                            "zongFen" => $endScore
+                        ),
+                        "message" => "ok"
+                    );
+                    echo json_encode($d);
+                }
+            }
         }
     }
 }

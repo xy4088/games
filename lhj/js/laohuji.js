@@ -1,18 +1,7 @@
 if (!window.XMLHttpRequest) {
     window.XMLHttpRequest=function (){
         var xmlHttp = false;
-        try {
-            return new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            try {
-                return new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e2) {
-                xmlHttp = false;
-            }
-        }
-        if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
-            return new XMLHttpRequest();
-        }
+        return new XMLHttpRequest();
         //return new ActiveXObject("Microsoft.XMLHTTP");
     }
 }
@@ -96,7 +85,7 @@ function wLaoHuJi(id) {
     this._piecelisttype = {};
 
     this._money = 0;
-    this._total = 100;           //默认为20分
+    this._total = 0;           //默认为20分
     this._startbox = 1;         //上次结果，此次的起点
     this._endbox = 1;          //这是这次的结果
     this._jumpnum = 1;        //这些需要算出来
@@ -106,6 +95,7 @@ function wLaoHuJi(id) {
     this._isfirstbet = true;
     this._isrun = false;
     this.bsState=1;
+    this.returnData=false;
 
     //定时器
     this._interval = null;
@@ -470,7 +460,22 @@ wLaoHuJi.prototype.run = function() {
     }
     timerdo();
 }
-
+wLaoHuJi.prototype.run1 =function(){
+    var self = this._self,
+        time = 500,
+        c=[];
+    function timerdo() {
+        c[0]=self._startbox;
+        self.showbox(c);
+        if(!self.returnData){
+            self._startbox++;
+            timer = setTimeout(timerdo, time);
+        }else{
+            clearTimeout(timer);
+        }
+    }
+    timerdo();
+}
 wLaoHuJi.prototype.result = function() {
     var self = this._self;
     //var winbox = this._endbox;
@@ -497,9 +502,9 @@ wLaoHuJi.prototype.result = function() {
     //    }
     //});
 }
-wLaoHuJi.prototype.getCountScore = function(score) {
+wLaoHuJi.prototype.getCountScore = function(countScore) {
     var self = this._self;
-    self._total=parseInt(score);  //初始总分;
+    self._total=parseInt(countScore);
     self.init();
 }
 wLaoHuJi.prototype.init = function() {
@@ -548,15 +553,24 @@ wLaoHuJi.prototype.init = function() {
         if (self._total > 0 && self.scores[n] < self._config.maxbet) {
             if(self.bsState==1){
                 self._total--;
-                self.scores[n]=self.scores[n] + 1;
+                self.scores[n] += 1;
             }
             else{
-                if(self._total>=10){
-                    self.scores[n] = self.scores[n] + 10;
+                if(self._total>=10&&self.scores[n]<=89){
+                    self.scores[n] += + 10;
                     self._total-=10;
-                }else{
-                    self.scores[n] = self.scores[n] + self._total;
-                    self._total-=self._total;
+                }else if(self._total>=10&&self.scores[n]>89){
+                    self._total-=(99-self.scores[n]);
+                    self.scores[n] += (99-self.scores[n]);
+                }else if(self._total<10){
+                    if(99-self.scores[n]>=self._total){
+                        self.scores[n] = self.scores[n] + self._total;
+                        self._total-=self._total;
+                    }else{
+                        self._total-=(99-self.scores[n]);
+                        self.scores[n] = self.scores[n] + (99-self.scores[n]);
+                    }
+
                 }
             }
             self.$(id).value = self.scores[n];
@@ -566,7 +580,6 @@ wLaoHuJi.prototype.init = function() {
 
     this.$('lhj_bet_bar').onclick = function() {
         betmoeny('lhj_bet_txt_bar',8);
-
     }
     this.$('lhj_bet_seven').onclick = function() {
         betmoeny('lhj_bet_txt_seven',7);
@@ -591,9 +604,13 @@ wLaoHuJi.prototype.init = function() {
     }
     this.$('smbs').onclick=function(){
         self.bsState=1;
+        this.style.fontSize=".8rem";
+        self.$('bigbs').style.fontSize="0.6rem";
     }
     this.$('bigbs').onclick=function(){
         self.bsState=10;
+        this.style.fontSize=".8rem";
+        self.$('smbs').style.fontSize="0.6rem";
     }
     this.$('lhj_ben_btn_start').onclick = function() {
 
@@ -613,7 +630,6 @@ wLaoHuJi.prototype.init = function() {
             return;
         }
         //先将得分转过来
-        self._total += parseInt(self._money);
         self._money = 0;
         self.$('lhj_ben_txt_total').innerHTML = self._total;
         self.$('lhj_ben_txt_money').innerHTML = self._money;
@@ -629,24 +645,25 @@ wLaoHuJi.prototype.init = function() {
         }
         this.disabled = true;
         self._isrun = true;
-        self._endbox = self._getWinNum();
-        var step = (self._endbox - self._startbox) > 0 ? self._endbox - self._startbox : 24 - self._startbox + self._endbox;
-        self._jumpnum = 24 * 4 + step; //这些需要算出来;
-        self.run();
+        self.$('lhj_ben_btn_start').setAttribute("class","lhj_bet_btn lhj_bet_btn2");
+        //self._endbox = self._getWinNum();
+        //self.run1();
         ajax_call(true,"/lhj/api/index.php","POST","s=gameStart&xiazhu="+JSON.stringify(self.scores),function(msg){
-            console.log(msg);
-            var data=JSON.parse(msg);
-            if(parseInt(data.status)==0){
+            var data = (new Function("return " + msg))();
+            if(data.code==0){
                 self._endbox = parseInt(data.data.weizhi);
-                //算出运行步数;
+                //算出运行步数
                 var step = (self._endbox - self._startbox) > 0 ? self._endbox - self._startbox : 24 - self._startbox + self._endbox;
                 self._jumpnum = 24 * 4 + step; //这些需要算出来;
+                self.returnData=true;
+                self._money=data.data.defen;
+                self._total=data.data.zongFen;
                 self.run();
             }
         });
     }
 
-    //初始化默认总分;
+    //初始化默认总分
     this.$('lhj_ben_txt_total').innerHTML = this._total;
 }
 
@@ -683,7 +700,7 @@ window.onload = function() {
             }
         });
     }
-}
+};
 
 function getCookie(name)
 {
@@ -693,3 +710,25 @@ function getCookie(name)
     else
         return null;
 }
+
+//排行榜;
+document.getElementById("rank").onclick = function(){
+    document.getElementById("rankPage").style.display = "block";
+    ajax_call(true,"/lhj/api/index.php","POST",'s=rank',function(msg){
+        var data = JSON.parse(msg);
+        if(data.code == 0) {
+            var str = "";
+            for(var i = 0 ; i < data.data.length ; i++){
+                str += "<tr><td>1</td><td>"+data.data[i].name+"</td><td>"+data.data[i].score+"</td></tr>";
+            }
+            document.getElementById("rank-table").innerHTML = str;
+        }else {
+            alert(data.message);
+        }
+    });
+
+};
+
+document.getElementById("close-rank").onclick = function(){
+    document.getElementById("rankPage").style.display = "none";
+};

@@ -25,6 +25,8 @@ if($p_type == 'login'){  //登录;
     $lottery->go();
 }elseif($p_type == 'countScore'){ //获取总分;
     getCountScore();
+}elseif($p_type == 'rank'){ //排行榜;
+    getRankData();
 }
 
 function login($name, $phone){
@@ -51,7 +53,7 @@ function login($name, $phone){
             ));
         }
     }else{
-        $sql = "INSERT INTO `lhj_users`(`id`, `name`, `phone`, `score`) VALUES (NULL, '".$name."', '". $phone."', 200)";
+        $sql = "INSERT INTO `lhj_users` VALUES (NULL, '".$name."', '". $phone."', 200, ".time().")";
         $result = $connect->db->exec($sql);
         if($result) {
             session_start();
@@ -92,6 +94,22 @@ function getCountScore() {
                 'message' => '您当前积分'.$n['score']
             ));
         }
+    }
+}
+
+function getRankData() {
+    $connect = new db_connect();
+    $sql = "SELECT name,score FROM lhj_users ORDER BY score DESC";
+    $result = $connect->db->query($sql);
+    $result->execute();
+    $result->setFetchMode(PDO::FETCH_ASSOC);
+    if($result){
+        $row = $result->fetchAll();
+        echo json_encode(array(
+            'code' => 0,
+            'data' => $row,
+            'message' => 'ok'
+        ));
     }
 }
 ?>

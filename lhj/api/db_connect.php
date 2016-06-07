@@ -11,7 +11,7 @@ class db_connect
     public function __construct(){
         $host = 'localhost';
         $username = 'root';
-        $password = '';
+        $password = 'a8857124.';
         $dbname = 'games';
 
         try {

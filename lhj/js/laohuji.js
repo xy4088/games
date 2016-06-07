@@ -726,7 +726,6 @@ document.getElementById("rank").onclick = function(){
             alert(data.message);
         }
     });
-
 };
 
 document.getElementById("close-rank").onclick = function(){

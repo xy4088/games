@@ -731,3 +731,11 @@ document.getElementById("rank").onclick = function(){
 document.getElementById("close-rank").onclick = function(){
     document.getElementById("rankPage").style.display = "none";
 };
+
+document.getElementById("rules").onclick = function(){
+    document.getElementById("rulesPage").style.display = "block";
+};
+
+document.getElementById("close-rules").onclick = function(){
+    document.getElementById("rulesPage").style.display = "none";
+};

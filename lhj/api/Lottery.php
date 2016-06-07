@@ -72,9 +72,9 @@ class Lottery
             $score = $n['score'];
             $ranNum=rand(0,10000);
             if($score < 200){
-                if($ranNum < 2500){
+                if($ranNum < 2000){
                     $weizhi = 23;
-                }elseif($ranNum >= 2500 && $ranNum < 5000){
+                }elseif($ranNum >= 2000 && $ranNum < 3000){
                     $weizhi = 24;
                 }else{
                     $weizhi = rand(1,24);
@@ -82,27 +82,27 @@ class Lottery
             }elseif($score >= 200 && $score <500){
                 if($ranNum<1500){
                     $weizhi = 23;
-                }elseif($ranNum >= 1500 && $ranNum < 2500){
+                }elseif($ranNum >= 1500 && $ranNum < 2300){
                     $weizhi = 24;
                 }else{
                     $weizhi = rand(1,24);
                 }
-            }elseif($score >= 500 && $score < 2000){
-                if($ranNum < 500){
+            }elseif($score >= 500 && $score < 1000){
+                if($ranNum < 1000){
                     $weizhi = 23;
-                }elseif($ranNum >= 500 && $ranNum < 1000){
+                }elseif($ranNum >= 1000 && $ranNum < 1500){
                     $weizhi = 24;
                 }else{
                     $weizhi = rand(1,22);
                 }
             }elseif($score >=2000 && $score < 5000){
-                if($ranNum < 300){
+                if($ranNum < 500){
                     $weizhi = 23;
-                }elseif($ranNum >= 300 && $ranNum < 500){
+                }elseif($ranNum >= 500 && $ranNum < 800){
                     $weizhi = 24;
-                }elseif($ranNum >= 500 && $ranNum < 1000){
+                }elseif($ranNum >= 800 && $ranNum < 1800){
                     $weizhi = 6;
-                }elseif($ranNum >= 1000 && $ranNum < 1500){
+                }elseif($ranNum >= 1800 && $ranNum < 2800){
                     $weizhi = 18;
                 }else{
                     $weizhi = rand(1,22);

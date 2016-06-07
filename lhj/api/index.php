@@ -22,7 +22,6 @@ if($p_type == 'login'){  //登录;
 }elseif($p_type == 'gameStart'){ //计算分数;
     $xiazhu = json_decode($data['xiazhu']);
     $lottery=new Lottery($xiazhu);
-    print_r($lottery);
     $lottery->go();
 }elseif($p_type == 'countScore'){ //获取总分;
     getCountScore();

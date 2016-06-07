@@ -51,7 +51,8 @@ class Lottery
      * @var array[array] 二维数组-数字代表几等奖，1=一等，2=二等，类推。
      */
     public $preTable=array(
-       
+        array(1,1,1,1,1
+            )
     );
 
     public function __construct($o) {
@@ -106,20 +107,20 @@ class Lottery
                 }else{
                     $weizhi = rand(1,22);
                 }
-            }else{
-                if($ranNum < 300){
+            }else {
+                if ($ranNum < 300) {
                     $weizhi = 23;
-                }elseif($ranNum >= 300 && $ranNum < 500){
+                } elseif ($ranNum >= 300 && $ranNum < 500) {
                     $weizhi = 24;
-                }elseif($ranNum >= 500 && $ranNum < 2500){
+                } elseif ($ranNum >= 500 && $ranNum < 2500) {
                     $weizhi = 6;
-                }elseif($ranNum >= 2500 && $ranNum < 5000){
+                } elseif ($ranNum >= 2500 && $ranNum < 5000) {
                     $weizhi = 18;
-                }else{
-                    $weizhi = rand(1,22);
+                } else {
+                    $weizhi = rand(1, 22);
                 }
 
-
+            }
 //          本次应该扣除的分数;
             $reduceScore = 0;
             $newArr=array();

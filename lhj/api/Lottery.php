@@ -51,8 +51,7 @@ class Lottery
      * @var array[array] 二维数组-数字代表几等奖，1=一等，2=二等，类推。
      */
     public $preTable=array(
-        array(1,1,1,1,1
-            )
+
     );
 
     public function __construct($o) {
@@ -63,6 +62,7 @@ class Lottery
         $connect = new db_connect();
         session_start();
         $id=$_SESSION['id'];
+        print_r($id);
         $phone=$_SESSION['phone'];
         $sql = "SELECT * FROM lhj_users WHERE id=".$id." AND phone=".$phone;
         $result = $connect->db->query($sql);
@@ -70,6 +70,7 @@ class Lottery
         $result->setFetchMode(PDO::FETCH_ASSOC);
         if($n = $result->fetch()){
             $score = $n['score'];
+            print_r($score);
             $ranNum=rand(0,10000);
             if($score < 200){
                 if($ranNum < 2500){
@@ -121,7 +122,6 @@ class Lottery
                 }
             }
 
-            print_r($weizhi);
 //          本次应该扣除的分数;
             $reduceScore = 0;
             $newArr=array();

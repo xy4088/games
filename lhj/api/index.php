@@ -7,7 +7,7 @@
  */
 header("Content-Type:text/html;charset=utf-8");
 include_once 'db_connect.php';
-include_once 'lottery.php';
+include_once 'Lottery.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $data = $_POST;
 }else{

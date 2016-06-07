@@ -648,7 +648,7 @@ wLaoHuJi.prototype.init = function() {
         self.$('lhj_ben_btn_start').setAttribute("class","lhj_bet_btn lhj_bet_btn2");
         //self._endbox = self._getWinNum();
         //self.run1();
-        ajax_call(true,"/lhj/api/index.php","POST","s=gameStart&xiazhu="+JSON.stringify(self.scores),function(msg){
+        ajax_call(true,"/lhj/api/","POST","s=gameStart&xiazhu="+JSON.stringify(self.scores),function(msg){
             var data = (new Function("return " + msg))();
             if(data.code==0){
                 self._endbox = parseInt(data.data.weizhi);
@@ -671,7 +671,7 @@ document.getElementById('validation').onclick = function() {
     var name = document.getElementById('name').value;
     var phone = document.getElementById('phone').value;
 
-    ajax_call(true,"/lhj/api/index.php","POST",'s=login&name='+name+'&phone='+phone,function(msg){
+    ajax_call(true,"/lhj/api/","POST",'s=login&name='+name+'&phone='+phone,function(msg){
         var data = JSON.parse(msg);
         if(data.code == 0) {
             var g = new wLaoHuJi("game");
@@ -688,7 +688,7 @@ window.onload = function() {
     if(!getCookie('id')){
         document.getElementById('pop').style.display = 'block';
     }else {
-        ajax_call(true,"/lhj/api/index.php","POST",'s=countScore&userid='+getCookie('id'),function(msg){
+        ajax_call(true,"/lhj/api/","POST",'s=countScore&userid='+getCookie('id'),function(msg){
             var data = JSON.parse(msg);
             if(data.code == 0) {
                 var g = new wLaoHuJi("game");
@@ -714,7 +714,7 @@ function getCookie(name)
 //排行榜;
 document.getElementById("rank").onclick = function(){
     document.getElementById("rankPage").style.display = "block";
-    ajax_call(true,"/lhj/api/index.php","POST",'s=rank',function(msg){
+    ajax_call(true,"/lhj/api/","POST",'s=rank',function(msg){
         var data = JSON.parse(msg);
         if(data.code == 0) {
             var str = "";

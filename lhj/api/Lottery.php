@@ -121,6 +121,7 @@ class Lottery
                 }
             }
 
+            print_r($weizhi);
 //          本次应该扣除的分数;
             $reduceScore = 0;
             $newArr=array();

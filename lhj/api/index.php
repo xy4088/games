@@ -24,6 +24,7 @@ if($p_type == 'login'){  //登录;
     $lottery=new Lottery($xiazhu);
     $lottery->go();
 }elseif($p_type == 'countScore'){ //获取总分;
+    print_r($p_type);
     getCountScore();
 }elseif($p_type == 'rank'){ //排行榜;
     getRankData();

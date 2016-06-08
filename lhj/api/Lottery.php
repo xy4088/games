@@ -73,7 +73,7 @@ class Lottery
 
             $newArr=$this->zhu;
             //本次应该扣除的分数;
-            $reduceScore = array_count_values($newArr);
+            $reduceScore = array_sum($newArr);
 
             if($reduceScore < 1 && $reduceScore > 99*8){
                 $d = array(

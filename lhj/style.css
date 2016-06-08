@@ -45,6 +45,11 @@ body{
     /*font-size: 1.4rem;*/
     background: url("images/gameBg.jpg") no-repeat;
     background-size: 100%;
+    user-select:   none;
+    -webkit-user-select:   none;
+    -moz-user-select:   none;
+    -ms-user-select:   none;
+    -o-user-select:   none;
 }
 @media (min-width: 640px){
     body{

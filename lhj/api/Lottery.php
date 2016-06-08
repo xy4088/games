@@ -70,6 +70,31 @@ class Lottery
         $result->setFetchMode(PDO::FETCH_ASSOC);
         if($n = $result->fetch()){
             $score = $n['score'];
+
+            //本次应该扣除的分数;
+            $reduceScore = 0;
+            $newArr=array();
+            foreach($this->zhu as $k=>$v){
+                if($v > 99){
+                    $d = array(
+                        "code" => 1005,
+                        "message" => "禁止用户作弊，请自觉遵守游戏规则"
+                    );
+                    echo json_encode($d);
+                    return;
+                }
+                $newArr[$k] = $v;
+                $reduceScore+=$v;
+            }
+            if($reduceScore > $score) {
+                $d = array(
+                    "code" => 1005,
+                    "message" => "积分不足，禁止用户作弊，请自觉遵守游戏规则"
+                );
+                echo json_encode($d);
+                return;
+            }
+
             $ranNum=rand(0,10000);
             if($score < 200){
                 if($ranNum < 1500){
@@ -80,7 +105,7 @@ class Lottery
                     $weizhi = rand(1,22);
                 }
             }elseif($score >= 200 && $score <500){
-                if($ranNum<1000){
+                if($ranNum<1000 && $newArr[8]<70){
                     $weizhi = 23;
                 }elseif($ranNum >= 1000 && $ranNum < 1800){
                     $weizhi = 24;
@@ -88,7 +113,7 @@ class Lottery
                     $weizhi = rand(1,22);
                 }
             }elseif($score >= 500 && $score < 1000){
-                if($ranNum < 500){
+                if($ranNum < 500 && $newArr[8]<60){
                     $weizhi = 23;
                 }elseif($ranNum >= 500 && $ranNum < 800){
                     $weizhi = 24;
@@ -96,7 +121,7 @@ class Lottery
                     $weizhi = rand(1,22);
                 }
             }elseif($score >=2000 && $score < 5000){
-                if($ranNum < 300){
+                if($ranNum < 300 && $newArr[8]<50){
                     $weizhi = 23;
                 }elseif($ranNum >= 300 && $ranNum < 500){
                     $weizhi = 24;
@@ -108,7 +133,7 @@ class Lottery
                     $weizhi = rand(1,22);
                 }
             }else {
-                if ($ranNum < 100) {
+                if ($ranNum < 100  && $newArr[8]<40) {
                     $weizhi = 23;
                 } elseif ($ranNum >= 100 && $ranNum < 150) {
                     $weizhi = 24;
@@ -121,13 +146,7 @@ class Lottery
                 }
 
             }
-//          本次应该扣除的分数;
-            $reduceScore = 0;
-            $newArr=array();
-            foreach($this->zhu as $k=>$v){
-                $newArr[$k] = $v;
-                $reduceScore+=$v;
-            }
+
             $unit = $this->scoreTable[$weizhi]["u"];
             if($weizhi == 6 || $weizhi == 18){
                 $theScore = 0;  //本次得分;

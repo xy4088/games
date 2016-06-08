@@ -20,7 +20,7 @@ if($p_type == 'login'){  //登录;
     $phone = strval($data['phone']);
     login($name, $phone);
 }elseif($p_type == 'gameStart'){ //计算分数;
-    $xiazhu = json_decode($data['xiazhu']);
+    $xiazhu = json_decode($data['xiazhu'], true);
     $lottery=new Lottery($xiazhu);
     $lottery->go();
 }elseif($p_type == 'countScore'){ //获取总分;

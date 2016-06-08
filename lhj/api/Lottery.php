@@ -71,20 +71,17 @@ class Lottery
         if($n = $result->fetch()){
             $score = $n['score'];
 
+            $newArr=$this->zhu;
             //本次应该扣除的分数;
-            $reduceScore = 0;
-            $newArr=array();
-            foreach($this->zhu as $k=>$v){
-                if($v > 99){
-                    $d = array(
-                        "code" => 1005,
-                        "message" => "禁止用户作弊，请自觉遵守游戏规则"
-                    );
-                    echo json_encode($d);
-                    return;
-                }
-                $newArr[$k] = $v;
-                $reduceScore+=$v;
+            $reduceScore = array_count_values($newArr);
+
+            if($reduceScore < 1 && $reduceScore > 99*8){
+                $d = array(
+                    "code" => 1005,
+                    "message" => "禁止用户作弊，请自觉遵守游戏规则"
+                );
+                echo json_encode($d);
+                return;
             }
             if($reduceScore > $score) {
                 $d = array(

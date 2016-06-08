@@ -99,6 +99,11 @@ function getCountScore() {
                 'message' => '重新登录'
             ));
         }
+    }else{
+        echo json_encode(array(
+            'code' => 1004,
+            'message' => '重新登录'
+        ));
     }
 }
 

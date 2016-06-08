@@ -695,6 +695,9 @@ window.onload = function() {
                 g.getCountScore(data.data);
                 document.getElementById('pop').style.display = 'none';
                 alert(data.message);
+            }else if(data.code == 1004) {
+                alert(data.message);
+                document.getElementById('pop').style.display = 'block';
             }else {
                 alert(data.message);
             }
@@ -719,7 +722,7 @@ document.getElementById("rank").onclick = function(){
         if(data.code == 0) {
             var str = "";
             for(var i = 0 ; i < data.data.length ; i++){
-                str += "<tr><td>1</td><td>"+data.data[i].name+"</td><td>"+data.data[i].score+"</td></tr>";
+                str += "<tr><td>"+(i+1)+"</td><td>"+data.data[i].name+"</td><td>"+data.data[i].score+"</td></tr>";
             }
             document.getElementById("rank-table").innerHTML = str;
         }else {

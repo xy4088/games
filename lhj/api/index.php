@@ -93,6 +93,11 @@ function getCountScore() {
                 'data' => $n['score'],
                 'message' => '您当前积分'.$n['score']
             ));
+        }else{
+            echo json_encode(array(
+                'code' => 1004,
+                'message' => '重新登录'
+            ));
         }
     }
 }

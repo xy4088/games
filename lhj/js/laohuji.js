@@ -578,41 +578,42 @@ wLaoHuJi.prototype.init = function() {
         }
     }
 
-    this.$('lhj_bet_bar').onclick = function() {
+    this.$('lhj_bet_bar').addEventListener("touchstart", function() {
         betmoeny('lhj_bet_txt_bar',8);
-    }
-    this.$('lhj_bet_seven').onclick = function() {
+    }, false);
+    this.$('lhj_bet_seven').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_seven',7);
-    }
-    this.$('lhj_bet_star').onclick = function() {
+    }, false);
+    this.$('lhj_bet_star').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_star',6);
-    }
-    this.$('lhj_bet_watermelons').onclick = function() {
+    }, false);
+    this.$('lhj_bet_watermelons').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_watermelons',5);
-    }
-    this.$('lhj_bet_alarm').onclick = function() {
+    }, false);
+    this.$('lhj_bet_alarm').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_alarm',4);
-    }
-    this.$('lhj_bet_coconut').onclick = function() {
+    }, false);
+    this.$('lhj_bet_coconut').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_coconut',3);
-    }
-    this.$('lhj_bet_orange').onclick = function() {
+    }, false);
+    this.$('lhj_bet_orange').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_orange',2);
-    }
-    this.$('lhj_bet_apple').onclick = function() {
+    }, false);
+    this.$('lhj_bet_apple').addEventListener("touchstart", function(){
         betmoeny('lhj_bet_txt_apple',1);
-    }
-    this.$('smbs').onclick=function(){
+    }, false);
+
+    this.$('smbs').addEventListener("touchstart", function() {
         self.bsState=1;
         this.style.fontSize=".8rem";
         self.$('bigbs').style.fontSize="0.6rem";
-    }
-    this.$('bigbs').onclick=function(){
+    }, false);
+    this.$('bigbs').addEventListener("touchstart", function() {
         self.bsState=10;
         this.style.fontSize=".8rem";
         self.$('smbs').style.fontSize="0.6rem";
-    }
-    this.$('lhj_ben_btn_start').onclick = function() {
+    }, false);
+    this.$('lhj_ben_btn_start').addEventListener("touchstart", function() {
 
         if (self._isrun) {
             return;
@@ -661,13 +662,16 @@ wLaoHuJi.prototype.init = function() {
                 self.run();
             }
         });
-    }
+    }, false);
 
     //初始化默认总分
     this.$('lhj_ben_txt_total').innerHTML = this._total;
 }
 
-document.getElementById('validation').onclick = function() {
+var falg = true;
+document.getElementById('validation').addEventListener("touchstart", function(){
+    if(!falg) return;
+    falg = false;
     var name = document.getElementById('name').value;
     var phone = document.getElementById('phone').value;
 
@@ -677,12 +681,14 @@ document.getElementById('validation').onclick = function() {
             var g = new wLaoHuJi("game");
             g.getCountScore(data.data);
             document.getElementById('pop').style.display = 'none';
+            falg = true;
             alert(data.message);
         }else {
+            falg = true;
             alert(data.message);
         }
     });
-}
+}, false);
 
 window.onload = function() {
     if(!getCookie('id')){

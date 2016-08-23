@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>宇师兄博客管理系统登录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            background-color: #38b7f6;
+            min-height: 300px;
+        }
+        #container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -moz-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            -o-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            background-color: #fff;
+            padding: 30px 50px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        #container .title {
+            color: #38b7f6;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        input{
+            width: 280px;
+            height: 40px;
+            padding: 0 20px;
+            border: 1px solid #38b7f6;
+            margin-top: 15px;
+            outline: none;
+        }
+        button {
+            width: 322px;
+            height: 40px;
+            margin-top: 30px;
+            border: 1px solid #38b7f6;
+            background-color: #fff;
+            color: #38b7f6;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<form id="container">
+    <div class="title">H5小游戏后台管理登录</div>
+    <div><input id="account" type="text" placeholder="管理账号"></div>
+    <div><input id="password" type="password" placeholder="登录密码"></div>
+    <div><button id="subInfo">登录</button></div>
+</form>
+<script>
+
+    var subInfoBtn = document.getElementById('subInfo');
+    var accountDom = document.getElementById('account');
+    var passwordDom = document.getElementById('password');
+    subInfoBtn.onclick = function(e) {
+        e.preventDefault();
+        var account = accountDom.value;
+        var pwd = passwordDom.value;
+        if(account == '') {
+            accountDom.focus();
+            return ;
+        }
+        if(pwd == '') {
+            passwordDom.focus();
+            return ;
+        }
+        ajax({
+            'url': 'api/login/',
+            'type': 'post',
+            'data': {s: 'login', user: account, password: pwd},
+            success: function(res) {
+                if(res.code == 0) {
+                    window.location.href = '/lhj/admin/management'
+                }else {
+                    alert(res.message);
+                }
+            },
+            error: function(res) {
+                console.log(res);
+            }
+        });
+    };
+
+    function ajax(obj) {
+        var url = obj.url,
+                type = obj.type ? obj.type : 'get',
+                success = obj.success ? obj.success : function(){},
+                error = obj.error ? obj.error : function(){},
+                async = obj.async ? obj.async : true,
+                data = '';
+        if(obj.data && Object.prototype.toString.call(obj.data) == "[object Object]") {
+            for (var i in obj.data) {
+                console.log(obj.data[i]);
+                data += i + "=" + obj.data[i] + "&";
+            }
+        }else {
+            data = '?' + obj.data;
+        }
+        //先声明一个异步请求对象
+        var xmlHttpReg = null;
+        //如果是IE;
+        if (window.ActiveXObject) {
+            xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");
+        }else if (window.XMLHttpRequest) {
+            xmlHttpReg = new XMLHttpRequest(); //实例化一个xmlHttpReg
+        }
+
+        //如果实例化成功,就调用open()方法,就开始准备向服务器发送请求
+        if (xmlHttpReg != null) {
+            if(type == 'get' || type == 'GET') {
+                xmlHttpReg.open("get", url + data, async);
+            }else if(type == 'post' || type == 'POST') {
+//                var data = JSON.stringify(obj.data);
+                xmlHttpReg.open("post", url, async);
+            }
+            xmlHttpReg.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttpReg.send(data);
+            xmlHttpReg.onreadystatechange = doResult; //设置回调函数
+        }
+
+        //回调函数
+        //一旦readyState的值改变,将会调用这个函数,readyState=4表示完成相应
+
+        //设定函数doResult()
+        function doResult() {
+            //4代表执行完成;
+            if (xmlHttpReg.readyState == 4) {
+                //200代表执行成功;
+                if (xmlHttpReg.status == 200) {
+                    //将xmlHttpReg.responseText的值赋给ID为resText的元素;
+                    success(JSON.parse(xmlHttpReg.responseText));
+                }else {
+                    error(xmlHttpReg);
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

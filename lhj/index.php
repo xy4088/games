@@ -14,5 +14,3 @@ if(isset($_SESSION['id'])){
 //    setcookie("id", $cookie, time()+3600, "games.com/lhj");
 }
 include_once "laohujigame.html";
-
-?>

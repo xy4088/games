@@ -668,10 +668,10 @@ wLaoHuJi.prototype.init = function() {
     this.$('lhj_ben_txt_total').innerHTML = this._total;
 }
 
-var falg = true;
+var flag = true;
 document.getElementById('validation').addEventListener("touchstart", function(){
-    if(!falg) return;
-    falg = false;
+    if(!flag) return;
+    flag = false;
     var name = document.getElementById('name').value;
     var phone = document.getElementById('phone').value;
 
@@ -681,10 +681,10 @@ document.getElementById('validation').addEventListener("touchstart", function(){
             var g = new wLaoHuJi("game");
             g.getCountScore(data.data);
             document.getElementById('pop').style.display = 'none';
-            falg = true;
+            flag = true;
             alert(data.message);
         }else {
-            falg = true;
+            flag = true;
             alert(data.message);
         }
     });

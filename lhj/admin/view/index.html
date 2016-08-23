@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小游戏后台管理</title>
+    <link rel="stylesheet" href="/lhj/admin/view/css/style.css"/>
+</head>
+<body>
+<div id="container">
+    <div class="toolbar">
+        <div class="title">小游戏后台管理</div>
+        <a class="logout">退出</a>
+    </div>
+    <div class="nav-bar">
+        <ul class="one-nav">
+            <li><a id="index">首页</a></li>
+            <li><a id="userList">用户列表</a></li>
+            <li><a id="logList">游戏记录</a></li>
+            <li><a id="pwdModify">密码修改</a></li>
+        </ul>
+    </div>
+    <div class="wrapper">
+        <div class="content">
+            <div class="page" id="index_page" style="display: block;">
+                这里是首页。
+            </div>
+            <div class="page" id="userList_page">
+                <div class="filter">
+                    <div class="filter-row">
+                        <div class="key-search">
+                            <select class="key-type" id="key_type">
+                                <option value="1">用户名</option>
+                                <option value="2">手机号</option>
+                            </select>
+                            <input type="text" class="key-content" id="key_content" />
+                            <button class="key-btn" id="key_btn">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="user-list" cellspacing="0" cellpadding="0">
+                    <tr><th>排名</th><th>姓名</th><th>电话</th><th>分数</th><th>第一次登录时间</th></tr>
+                    <tr><td>1</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                    <tr><td>2</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                    <tr><td>3</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                    <tr><td>4</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                    <tr><td>5</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                    <tr><td>6</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                </table>
+                <div>
+                    <ul class="page-number">
+                        <li><a>首页</a></li>
+                        <li><a><<</a></li>
+                        <li><a>1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>>></a></li>
+                        <li><a>尾页</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="page" id="logList_page">
+                游戏记录
+            </div>
+            <div class="page" id="pwdModify_page">
+                密码修改
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript" src="/lhj/admin/view/js/jquery.min.js"></script>
+<script type="application/javascript" src="/lhj/admin/view/js/main.js"></script>
+</body>
+</html>

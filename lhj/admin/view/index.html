@@ -13,10 +13,10 @@
     </div>
     <div class="nav-bar">
         <ul class="one-nav">
-            <li><a id="index">首页</a></li>
-            <li><a id="userList">用户列表</a></li>
-            <li><a id="logList">游戏记录</a></li>
-            <li><a id="pwdModify">密码修改</a></li>
+            <li><a id="index" class="nav active">首页</a></li>
+            <li><a id="userList" class="nav">用户列表</a></li>
+            <li><a id="logList" class="nav">游戏记录</a></li>
+            <li><a id="pwdModify" class="nav">密码修改</a></li>
         </ul>
     </div>
     <div class="wrapper">
@@ -37,28 +37,30 @@
                         </div>
                     </div>
                 </div>
-                <table class="user-list" cellspacing="0" cellpadding="0">
-                    <tr><th>排名</th><th>姓名</th><th>电话</th><th>分数</th><th>第一次登录时间</th></tr>
-                    <tr><td>1</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
-                    <tr><td>2</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
-                    <tr><td>3</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
-                    <tr><td>4</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
-                    <tr><td>5</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
-                    <tr><td>6</td><td>小小为</td><td>15208359521</td><td>200</td><td>456456</td></tr>
+                <table id="user_list" class="user-list" cellspacing="0" cellpadding="0">
                 </table>
-                <div>
-                    <ul class="page-number">
-                        <li><a>首页</a></li>
-                        <li><a><<</a></li>
-                        <li><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>>></a></li>
-                        <li><a>尾页</a></li>
-                    </ul>
+                <div id="userPaging" class="page-wrap">
+
                 </div>
             </div>
             <div class="page" id="logList_page">
-                游戏记录
+                <div class="filter">
+                    <div class="filter-row">
+                        <div class="key-search">
+                            <select class="key-type" id="log_key_type">
+                                <option value="1">用户名</option>
+                                <option value="2">手机号</option>
+                            </select>
+                            <input type="text" class="key-content" id="log_key_content" />
+                            <button class="key-btn" id="log_key_btn">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <table id="log_list" class="user-list" cellspacing="0" cellpadding="0">
+                </table>
+                <div id="logPaging" class="page-wrap">
+
+                </div>
             </div>
             <div class="page" id="pwdModify_page">
                 密码修改

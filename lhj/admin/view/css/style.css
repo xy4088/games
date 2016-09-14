@@ -132,6 +132,9 @@ a:hover {
 }
 
 /*页码样式*/
+.page-wrap {
+    text-align: center;
+}
 .page-number {
     display: inline-block;
     padding-left: 0;
@@ -149,6 +152,7 @@ a:hover {
 }
 .page-number .active > a {
     background-color: #23bab5;
+    border: 1px solid #23bab5;
     color: #fff;
 }
 .page-number .disabled > a,
